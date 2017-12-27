@@ -7,17 +7,38 @@ body,html
   background-color: DarkCyan;
 }
 
-canvas
+#game
 {
-  position: absolute;
+	position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
 
-  margin: 0;
+	margin: 0;
   padding: 0;
 }
 
-body > div
+canvas
+{
+	position: relative;
+	left: 50%; top: 50%;
+	transform: translate(-50%, 0%);
+}
+
+#bow
+{
+	position: absolute;
+	top: -7%; left: 78%;
+
+	transform: scale(0.6,0.6) rotate(10deg);
+	transform-origin: top;
+	background-image: url(../img/bow.png);
+	background-repeat: no-repeat;
+
+	width: 319px;
+	height: 269px;
+}
+
+#menu
 {
 	position: absolute;
 	left: 50%; top: 50%;
@@ -35,7 +56,7 @@ body > div
 .op
 {
 	width: 70%;
-	height: 20%;
+	height: 25%;
 
 	border-radius: 20px;
 	display: flex; justify-content: center; align-items: center;

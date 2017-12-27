@@ -5,15 +5,13 @@ let snake, fruit;
 let state = 0; //0 - menu 1 - game 2 - restart menu
 let alpha = 0;
 
-//texts
-
 function init(){
   ctx = $("canvas").get(0).getContext('2d');
   cW = $("canvas").width();
   cH = $("canvas").height();
 
   fruit = new Fruit();
-  snake = new Snake(16,16);
+  snake = new Snake(17,17);
 
 	draw();
 	setInterval(update, inv);
@@ -57,9 +55,46 @@ function draw(){
 			}
 		}
 
+		for(let i = 0; i < powerups.length; i++){
+			powerups[i].render(ctx);
+		}
+
 		fruit.render(ctx);
 		snake.render(ctx);
 	}
+}
+
+
+function restart(){
+	snake.setDirection(0,0);
+	snake.x = 17;
+	snake.y = 17;
+	snake.tail.length = 0;
+	powerups.length = 0;
+
+	state = 2;
+	alpha = 0;
+
+	$(".op:nth-child(n+2)").hide();
+	$("#menu").fadeIn(600);
+}
+
+function generatePowerups(){
+	let t1 = setTimeout(() => {
+		if(state != 1){
+			clearTimeout(t1);
+			return;
+		}
+		new PowerUp();
+	}, Math.random() * (10000-2000) + 2000);
+
+	let t2 = setTimeout(() => {
+		if(state != 1){
+			clearTimeout(t2);
+			return;
+		}
+		generatePowerups();
+	}, Math.random() * (30000-15000) + 15000);
 }
 
 //Event handlers
@@ -90,16 +125,3 @@ $(document).on('keydown', (e) => {
       break;
   }
 });
-
-function restart(){
-	snake.setDirection(0,0);
-	snake.x = 16;
-	snake.y = 16;
-	snake.tail.length = 0;
-
-	state = 2;
-	alpha = 0;
-
-	$(".op:nth-child(n+2)").hide();
-	$("body > div").fadeIn(600);
-}
